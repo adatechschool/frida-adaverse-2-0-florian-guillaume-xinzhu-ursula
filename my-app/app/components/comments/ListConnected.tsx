@@ -43,7 +43,7 @@ export default function ListConnected({ comments, userId }: Props) {
               {/* En-tête du commentaire (auteur + date) */}
               <div className="flex items-center gap-3 mb-3">
                 {/* Avatar */}
-                <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200 shrink-0">
                   {comment.user?.image ? (
                     <Image
                       src={comment.user.image}
@@ -80,7 +80,7 @@ export default function ListConnected({ comments, userId }: Props) {
                 {comment.message}
               </p>
               <div className="ml-auto flex gap-4">
-                {userId === comment.user.id && (
+                {userId === comment.user?.id && (
                   <>
                     <button className="w-[140px] h-[50px] font-oswald-semibold flex-1 bg-ada-dark hover:bg-gray-800 text-white text-sm py-2 rounded-lg transition-all disabled:opacity-50">
                       ✏️ Editer

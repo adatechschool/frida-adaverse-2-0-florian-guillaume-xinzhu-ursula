@@ -10,7 +10,7 @@ import { user } from "@/app/lib/db/schema";
 import { eq } from "drizzle-orm";
 import ListConnected from "@/app/components/comments/ListConnected";
 import { truncate } from "node:fs";
-import ListAdmin from "@/app/components/comments/ListAdmn";
+import ListAdmin from "@/app/components/comments/ListAdmin";
 
 export default async function ProjectPage({
   params,

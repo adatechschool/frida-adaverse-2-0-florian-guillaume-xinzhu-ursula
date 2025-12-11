@@ -1,0 +1,1 @@
+function isBanished (userId: string) {
