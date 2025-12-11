@@ -1,6 +1,6 @@
 "use client"
 
-import { getPromotions, getAdaProjects } from "../../actions/project";
+import { getPromotions, getAdaProjects } from "@/app/actions/project";
 import { useState, useEffect } from "react";
 import Formulaire from "./Formulaire";
 import type { Promotion, AdaProject } from "@/app/types";
