@@ -1,9 +1,12 @@
 "use client";
 import { signup } from "@/app/actions/connect";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function SignUp() {
   const [isOpen, setIsOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
 
   return (
     <>
@@ -21,29 +24,65 @@ export default function SignUp() {
             action={signup}
           >
             <button
-              className="w-full bg-ada-red hover:bg-ada-coral text-white font-black py-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all mt-6 font-oswald-bold text-2xl"
+              type="button"
+              className="absolute top-4 right-4 w-10 h-10 bg-ada-red hover:bg-ada-coral text-white font-black rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all font-oswald-bold text-xl"
               onClick={() => setIsOpen(false)}
             >
-              x
+              ×
             </button>
-            <label>Nom</label>
+
+            <h2 className="text-2xl font-oswald-bold text-ada-red mb-6">Inscription</h2>
+
+            {error === "email-missing" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                L'Email est requis.
+              </div>
+            )}
+            {error === "name-missing" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                Le nom est requis.
+              </div>
+            )}
+            {error === "password-missing" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                Le mot de passe est requis.
+              </div>
+            )}
+            {error === "email-used" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                Cet email est déjà utilisé.
+              </div>
+            )}
+            {error === "generic" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                Une erreur est survenue. Vérifiez vos informations.
+              </div>
+            )}
+
+            <label className="block font-oswald-regular mb-2">Nom</label>
             <input
               type="text"
               name="name"
-              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
-            ></input>
-            <label>Email</label>
+              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all mb-4"
+              required
+            />
+
+            <label className="block font-oswald-regular mb-2">Email</label>
             <input
               type="email"
               name="email"
-              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
-            ></input>
-            <label>Mot de passe</label>
+              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all mb-4"
+              required
+            />
+
+            <label className="block font-oswald-regular mb-2">Mot de passe</label>
             <input
               type="password"
               name="password"
-              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
-            ></input>
+              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all mb-4"
+              required
+            />
+
             <button
               type="submit"
               className="w-full bg-ada-red hover:bg-ada-coral text-white font-black py-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all mt-6 font-oswald-bold text-2xl"
