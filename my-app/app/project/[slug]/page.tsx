@@ -9,6 +9,8 @@ import { db } from "@/app/lib/db/drizzle";
 import { user } from "@/app/lib/db/schema";
 import { eq } from "drizzle-orm";
 import ListConnected from "@/app/components/comments/ListConnected";
+import { truncate } from "node:fs";
+import ListAdmin from "@/app/components/comments/ListAdmn";
 
 export default async function ProjectPage({
   params,
@@ -157,6 +159,8 @@ export default async function ProjectPage({
         {/* ✅ Section Commentaires si utilisateur pas connecté*/}
         {!session && <CommentsList comments={project.comments} />}
         {isAdmin === false && <ListConnected comments={project.comments} userId={connectedUserId} />}
+        {isAdmin === true && <ListAdmin comments={project.comments} userId={connectedUserId} />}
+
       </main>
     </div>
   );
