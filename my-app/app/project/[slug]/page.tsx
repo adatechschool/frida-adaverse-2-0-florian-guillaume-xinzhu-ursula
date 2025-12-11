@@ -38,9 +38,8 @@ export default async function ProjectPage({
     );
   }
   const session = await auth.api.getSession({ headers: await headers() });
-  console.log("session", session);
-  //récupérer l'état connexion :
-
+  // console.log("session", session);
+  //récupérer l'état connexion et les rôles:
   let isAdmin;
   let connectedUserId;
   
@@ -54,12 +53,11 @@ export default async function ProjectPage({
       userId:user.id })
       .from(user)
       .where(eq(user.id, session.user.id));
-    console.log("connectedUser", connectedUser);
+    // console.log("connectedUser", connectedUser);
 
     isAdmin = connectedUser[0]?.role;
     connectedUserId = connectedUser[0]?.userId;
   }
-
   return (
     <div className="min-h-screen bg-ada-bg">
       {/* Header avec logo cliquable */}
@@ -160,7 +158,7 @@ export default async function ProjectPage({
 
         {/* ✅ Section Commentaires si utilisateur pas connecté*/}
         {!session && <CommentsList comments={project.comments} />}
-        {isAdmin === false && connectedUserId && <ListConnected comments={project.comments} userId={connectedUserId} />}
+        {isAdmin === false && connectedUserId && <ListConnected comments={project.comments} userId={connectedUserId} projectId={project.id}  />}
         {isAdmin === true && connectedUserId && <ListAdmin comments={project.comments} userId={connectedUserId} />}
 
       </main>

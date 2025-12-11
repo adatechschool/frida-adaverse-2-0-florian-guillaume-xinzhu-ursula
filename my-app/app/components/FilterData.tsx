@@ -18,7 +18,6 @@ export default function FilterData({ projects, promos }: Props) {
     return project.promotion?.id === Number(selectedPromo);
   });
 
-
   return (
     <div>
       <header className="bg-white shadow-md sticky top-0 z-50">
