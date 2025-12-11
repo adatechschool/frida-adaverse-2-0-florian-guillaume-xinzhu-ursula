@@ -1,5 +1,7 @@
 "use server"
 
+"use server"
+
 import { revalidatePath } from "next/cache";
 import { db } from "../lib/db/drizzle";
 import { commentsTable, user } from "../lib/db/schema";
@@ -8,38 +10,25 @@ import { auth } from "../lib/auth";
 import { headers } from "next/headers";
 
 // Ajouter un commentaire
-export async function addComment(projectId: number, message: string) {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
+export async function addComment (formData: FormData) {
+    const comment = formData.get("comment") as string
+    const userId = formData.get("userId") as string
+    const projectId = formData.get("projectId") as string
 
-    if (!session) {
-        throw new Error("Vous devez être connecté");
+    if (!comment || !userId || !projectId) {
+        throw new Error ("Le message ne peut pas être vide")
     }
 
-    // ✅ Vérifier si l'utilisateur est banni
-    const userInfo = await db.select()
-        .from(user)
-        .where(eq(user.id, session.user.id))
-        .limit(1);
-
-    if (userInfo[0]?.isBanished) {
-        throw new Error("Vous avez été banni et ne pouvez plus commenter");
+    try {
+        await db.insert(commentsTable).values({
+            message: comment,
+            user_id: userId,
+            project_id: Number(projectId)
+        })
+    revalidatePath('/project', 'layout')
+    } catch (error) {
+        console.error("Erreur lors de publication de message", error)
     }
-
-    // 3. Vérifier que le message n'est pas vide
-    if (!message || message.trim() === "") {
-        throw new Error("Le commentaire ne peut pas être vide");
-    }
-
-    // 4. Ajouter le commentaire à la base de données
-    await db.insert(commentsTable).values({
-        user_id: session.user.id,
-        project_id: projectId,
-        message: message.trim()
-    });
-
-    revalidatePath("/project/[slug]");
 }
 
 // Supprimer un commentaire
@@ -150,3 +139,4 @@ export async function deleteCommentAdmin(commentId: number) {
 
     revalidatePath("/project/[slug]");
 }
+

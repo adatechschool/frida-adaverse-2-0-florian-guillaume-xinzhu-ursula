@@ -5,7 +5,6 @@ import { ProjectWithRelations } from "./types"; // Add this import
 export default async function Home() {
   const projects = await getAllProjects() as ProjectWithRelations[];
   const promos = await getPromotions();
-  console.log("projects", projects)
   return (
     <div>
       <FilterData 
