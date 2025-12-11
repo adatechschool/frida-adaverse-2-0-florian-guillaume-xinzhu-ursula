@@ -5,6 +5,9 @@ import { db } from "../lib/db/drizzle";
 import { projectsTable, adaTable, promotionsTable, commentsTable } from "../lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { sql } from "drizzle-orm";
+import { headers } from "next/dist/server/request/headers";
+import { auth } from "../lib/auth";
+import { redirect } from "next/dist/client/components/navigation";
 
 // ==================== HELPER ====================
 
@@ -21,6 +24,17 @@ function generateSlug(text: string): string {
 // ==================== MUTATIONS ====================
 
 export async function addProject(formData: FormData) {
+
+    //  1. Récupérer la session de l'utilisateur connecté
+    const session = await auth.api.getSession({
+        headers: await headers()
+    });
+
+    //  2. Vérifier que l'utilisateur est connecté
+    if (!session) {
+        throw new Error("Vous devez être connecté pour créer un projet");
+    }
+    //  3. Récupérer les données du formulaire
     const name = formData.get("name") as string
     const githubLink = formData.get("github_url") as string
     const demoLink = formData.get("demo_url") as string
@@ -38,10 +52,18 @@ export async function addProject(formData: FormData) {
         demo_url: demoLink,
         promotion_id: Number(promoId),
         ada_project_id: Number(adaProjectId),
+        user_id: session.user.id, // ← Associer le projet à l'utilisateur
         published_at: null, // Par défaut non publié
     })
 
     revalidatePath("/")
+}
+
+export async function isUserConnected() {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    });
+    return !!session;
 }
 
 export async function publishProject(projectId: number) {

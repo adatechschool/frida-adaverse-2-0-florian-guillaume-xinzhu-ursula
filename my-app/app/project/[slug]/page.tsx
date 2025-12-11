@@ -41,21 +41,23 @@ export default async function ProjectPage({
   console.log("session", session);
   //récupérer l'état connexion :
 
-  const connectedUser = await db
-    .select({ 
-        role: user.isAdmin,
-    userId:user.id })
-    .from(user)
-    .where(eq(user.id, session?.user.id));
-  console.log("connectedUser", connectedUser);
-
   let isAdmin;
-  let connectedUserId
-  if (!session) {
+  let connectedUserId;
+  
+  if (!session?.user?.id) {
     isAdmin = null;
+    connectedUserId = null;
   } else {
-    isAdmin = connectedUser[0].role;
-    connectedUserId = connectedUser[0].userId
+    const connectedUser = await db
+      .select({ 
+          role: user.isAdmin,
+      userId:user.id })
+      .from(user)
+      .where(eq(user.id, session.user.id));
+    console.log("connectedUser", connectedUser);
+
+    isAdmin = connectedUser[0]?.role;
+    connectedUserId = connectedUser[0]?.userId;
   }
 
   return (
@@ -158,8 +160,8 @@ export default async function ProjectPage({
 
         {/* ✅ Section Commentaires si utilisateur pas connecté*/}
         {!session && <CommentsList comments={project.comments} />}
-        {isAdmin === false && <ListConnected comments={project.comments} userId={connectedUserId} />}
-        {isAdmin === true && <ListAdmin comments={project.comments} userId={connectedUserId} />}
+        {isAdmin === false && connectedUserId && <ListConnected comments={project.comments} userId={connectedUserId} />}
+        {isAdmin === true && connectedUserId && <ListAdmin comments={project.comments} userId={connectedUserId} />}
 
       </main>
     </div>

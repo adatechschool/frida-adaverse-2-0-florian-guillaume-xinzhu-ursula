@@ -47,6 +47,11 @@ export type Promotion = {
 };
 // types.ts
 
+export type AdaProject = {
+  id: number;
+  name: string;
+  created_at: Date;
+};
 // Type pour UN projet avec ses détails complets
 export type ProjectDetail = {
   // Colonnes du projet

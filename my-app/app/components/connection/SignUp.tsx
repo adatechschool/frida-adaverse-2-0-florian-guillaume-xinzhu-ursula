@@ -20,36 +20,41 @@ export default function SignUp() {
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 transform transition-all relative"
             action={signup}
           >
-            <button
-              className="w-full bg-ada-red hover:bg-ada-coral text-white font-black py-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all mt-6 font-oswald-bold text-2xl"
-              onClick={() => setIsOpen(false)}
-            >
-              x
-            </button>
-            <label>Nom</label>
-            <input
-              type="text"
-              name="name"
-              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
-            ></input>
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
-            ></input>
-            <label>Mot de passe</label>
-            <input
-              type="password"
-              name="password"
-              className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
-            ></input>
-            <button
-              type="submit"
-              className="w-full bg-ada-red hover:bg-ada-coral text-white font-black py-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all mt-6 font-oswald-bold text-2xl"
-            >
-              valider
-            </button>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="w-10 h-10 bg-ada-red hover:bg-ada-coral text-white rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-2xl"
+                onClick={() => setIsOpen(false)}
+              >
+                x
+              </button>
+            </div>
+            <div>
+              <label>Nom</label>
+              <input
+                type="text"
+                name="name"
+                className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
+              ></input>
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
+              ></input>
+              <label>Mot de passe</label>
+              <input
+                type="password"
+                name="password"
+                className="font-oswald-regular w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-ada-red focus:ring-2 focus:ring-ada-red/20 transition-all"
+              ></input>
+              <button
+                type="submit"
+                className="w-full bg-ada-red hover:bg-ada-coral text-white font-black py-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all mt-6 font-oswald-bold text-2xl"
+              >
+                valider
+              </button>
+            </div>
           </form>
         </div>
       )}
