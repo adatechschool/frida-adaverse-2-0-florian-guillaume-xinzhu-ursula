@@ -2,12 +2,18 @@
 import { signup } from "@/app/actions/connect";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-
+import React from "react";
 export default function SignUp() {
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 
+  
+    React.useEffect(() => {
+      if (error) {
+        setIsOpen(true);
+      }
+    }, [error]);
   return (
     <>
       <button
@@ -43,14 +49,14 @@ export default function SignUp() {
                 Le nom est requis.
               </div>
             )}
-            {error === "password-missing" && (
+            {error === "PASSWORD_TOO_SHORT" && (
               <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
-                Le mot de passe est requis.
+               Mot de passe trop court.
               </div>
             )}
-            {error === "email-used" && (
+            {error ==="USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL" && (
               <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
-                Cet email est déjà utilisé.
+                Cet utilisateur existe deja. Utilisez un autre Email.
               </div>
             )}
             {error === "generic" && (

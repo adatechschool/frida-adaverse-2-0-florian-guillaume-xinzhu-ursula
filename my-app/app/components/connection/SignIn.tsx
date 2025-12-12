@@ -56,17 +56,13 @@ export default function SignIn() {
 
             <h2 className="text-2xl font-oswald-bold text-ada-red mb-6">Connexion</h2>
 
-            {error === "email-missing" && (
-              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
-                Email manquant ou incorrect!
-              </div>
-            )}
-            {error === "password-missing" && (
-              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
-                Mot de passe manquant ou incorrect!
-              </div>
-            )}
-            {error === "true" && (
+{error === "invalid-credentials" && (
+  <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+    Email ou mot de passe incorrect !
+  </div>
+)}
+
+            {error === "generic" && (
               <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
                 Une erreur est survenue
               </div>

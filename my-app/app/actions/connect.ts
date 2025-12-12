@@ -31,11 +31,18 @@ export const signup = async (formData: FormData) => {
 
     if (!response.ok) {
         const errorData = await response.json();
-
-        if (errorData.code === "USER_ALREADY_EXISTS") {
+console.log("ERREUR API :", errorData);
+        if (errorData.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
             console.error("Ce compte existe déjà");
-            redirect("/auth/signup?error=email-used");
-        } else {
+            redirect("/auth/signup?error=USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL");
+        } 
+        else if (errorData.code === "PASSWORD_TOO_SHORT"){
+            console.error("Mot de passe trop court ");
+            redirect("/auth/signup?error='PASSWORD_TOO_SHORT'")
+        }
+        
+        else
+         {
             console.error("Echec de l'inscription:", errorData.message);
             redirect("/auth/signup?error=generic");
         }
@@ -66,16 +73,13 @@ export const signin = async (formData: FormData) => {
 
     if (!response.ok) {
         const errorData = await response.json();
-
-        if (errorData.code === "AUTH_USER_NOT_FOUND") {
-            console.error("Ce compte n'existe pas");
-            redirect("/auth/signin?error=email-missing");
-        } else if (errorData.code === "AUTH_INVALID_PASSWORD") {
-            console.error("Mot de passe incorrect");
-            redirect("/auth/signin?error=password-missing");
-        } else {
+console.log("ERREUR API :", errorData);
+       if (errorData.code === "INVALID_EMAIL_OR_PASSWORD") {
+        redirect("/auth/signin?error=invalid-credentials"); 
+    } 
+ else {
             console.error("Echec de la connexion:", errorData.message);
-            redirect("/auth/signin?error=true");
+            redirect("/auth/signin?error=generic");
         }
     }
 
