@@ -5,6 +5,7 @@ import SignIn from "./components/connection/SignIn";
 import SignOutButton from "./components/connection/SignOutButton";
 import { auth } from "./lib/auth";
 import { headers } from "next/headers";
+import UserSession from "./components/connection/UserSession";
 
 
 export const metadata: Metadata = {
@@ -17,24 +18,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth.api.getSession({headers: await headers()});
+  const rawSession = await auth.api.getSession({headers: await headers()});
 
-  
+  const session = rawSession?.user 
+? {id:rawSession.user.id,name:rawSession.user.name, email:rawSession.user.email}
+: null;
   return (
     <html lang="en">
       <body
       > 
       <nav className= "flex flex-row justify-end gap-4 p-4">
-           {session ? (
-            // Si connecté : afficher le bouton de déconnexion
-            <SignOutButton />
-          ) : (
-            // Si non connecté : afficher inscription + connexion
-            <>
-              <SignUp />
-              <SignIn />
-            </>
-          )}
+           <UserSession session={session}/>
       </nav>
         {children}
       </body>
