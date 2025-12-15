@@ -20,8 +20,8 @@ export default function FormModal() {
     // Vérifier au montage
     checkConnection();
 
-    // ✅ Vérifier toutes les 2 secondes
-    const interval = setInterval(checkConnection, 1000);
+    // ✅ Vérifier toutes les 5 secondes
+    const interval = setInterval(checkConnection, 5000);
 
     return () => clearInterval(interval);
   }, []);

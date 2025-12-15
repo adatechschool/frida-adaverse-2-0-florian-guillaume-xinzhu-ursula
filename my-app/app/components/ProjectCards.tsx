@@ -30,7 +30,7 @@ export default function ProjectCard({ project }: Props) {
       {/* Badge promo en overlay */}
       <div className="absolute top-3 right-3 z-10">
         <span className="inline-block bg-ada-red text-white text-xs font-bold px-3 py-1.5 rounded  shadow-lg">
-          {project.name || "?"}
+          {project.promotion?.name || "?"}
         </span>
       </div>
 
