@@ -5,20 +5,40 @@ import { useState } from "react"
 type Props = {
   githubUrl: string
   projectName: string
-  height?: string  // Hauteur personnalisable
+  height?: string
 }
 
 export default function ProjectImage({ githubUrl, projectName, height = "h-48" }: Props) {
   const [imageError, setImageError] = useState(false)
 
   const getThumbnailUrl = (url: string) => {
-    return `${url}/blob/main/thumbnail.png?raw=true`
+    // ✅ Convertir l'URL GitHub en URL raw correcte
+    // De: https://github.com/user/repo
+    // À:  https://raw.githubusercontent.com/user/repo/main/thumbnail.png
+    
+    const cleanUrl = url.replace(/\/$/, ''); // Enlever le / final si présent
+    const rawUrl = cleanUrl
+      .replace('github.com', 'raw.githubusercontent.com')
+      .replace('/blob/', '/'); // Supprimer /blob/ si présent
+    
+    // Essayer d'abord avec 'main', sinon 'master'
+    return `${rawUrl}/main/thumbnail.png`;
+  }
+
+  const handleImageError = () => {
+    // ✅ Essayer avec 'master' si 'main' échoue
+    const img = document.querySelector(`img[alt="${projectName}"]`) as HTMLImageElement;
+    if (img && img.src.includes('/main/')) {
+      img.src = img.src.replace('/main/', '/master/');
+    } else {
+      setImageError(true);
+    }
   }
 
   return (
     <div className={`relative ${height} overflow-hidden bg-gray-100`}>
       {imageError ? (
-        <div className="w-full h-full bg-linear-to-br from-ada-blue to-ada-coral flex items-center justify-center">
+        <div className="w-full h-full bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
           <div className="text-center">
             <img
               className="text-gray-500 w-18 h-18 object-contain justify-center mx-auto"
@@ -35,7 +55,7 @@ export default function ProjectImage({ githubUrl, projectName, height = "h-48" }
           src={getThumbnailUrl(githubUrl)}
           alt={projectName}
           className="w-full h-full object-cover"
-          onError={() => setImageError(true)}
+          onError={handleImageError}
         />
       )}
     </div>
