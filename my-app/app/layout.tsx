@@ -4,6 +4,9 @@ import { auth } from "./lib/auth";
 import { headers } from "next/headers";
 import FormModal from "./components/Formulaire/FormModal";
 import NavSelect from "./components/NavSelect";
+import SignIn from "./components/connection/SignIn";
+import SignOutButton from "./components/connection/SignOutButton";
+import SignUp from "./components/connection/SignUp";
 
 export const metadata: Metadata = {
   title: "Adaverse",
