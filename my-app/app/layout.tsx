@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="flex justify-end items-baseline gap-4 p-4">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo/Titre style Ada */}
           <h1 className="text-5xl font-futura mr-auto">
             <a href="/">
