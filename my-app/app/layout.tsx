@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SignUp from "./components/connection/SignUp";
-import SignIn from "./components/connection/SignIn";
-import SignOutButton from "./components/connection/SignOutButton";
 import { auth } from "./lib/auth";
 import { headers } from "next/headers";
 import FormModal from "./components/Formulaire/FormModal";
