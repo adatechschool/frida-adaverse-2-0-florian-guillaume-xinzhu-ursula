@@ -45,6 +45,12 @@ export default function ProjectCard({ project }: Props) {
               year: "numeric",
             })}
         </p>
+         {/* ✅ AJOUT : Nombre de commentaires */}
+        <p className="text-sm text-gray-500 flex items-center gap-2 mt-2">
+          <span>💬</span>
+          {project.comments_count}{" "}
+          {project.comments_count > 1 ? "commentaires" : "commentaire"}
+        </p>
 
         <div className="mt-4 flex items-center text-ada-red font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
           Voir le projet
