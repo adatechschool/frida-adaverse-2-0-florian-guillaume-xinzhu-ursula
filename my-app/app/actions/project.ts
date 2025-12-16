@@ -7,7 +7,6 @@ import { eq, desc, isNotNull } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 import { headers } from "next/dist/server/request/headers";
 import { auth } from "../lib/auth";
-import { redirect } from "next/dist/client/components/navigation";
 
 // ==================== HELPER ====================
 
@@ -58,12 +57,7 @@ export async function addProject(formData: FormData) {
     revalidatePath("/");
 }
 
-export async function isUserConnected() {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
-    return !!session;
-}
+
 
 export async function publishProject(projectId: number) {
     await db

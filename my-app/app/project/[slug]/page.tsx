@@ -9,7 +9,6 @@ import { db } from "@/app/lib/db/drizzle";
 import { user } from "@/app/lib/db/schema";
 import { eq } from "drizzle-orm";
 import ListConnected from "@/app/components/comments/ListConnected";
-import { truncate } from "node:fs";
 import ListAdmin from "@/app/components/comments/ListAdmin";
 
 export default async function ProjectPage({
@@ -38,9 +37,9 @@ export default async function ProjectPage({
     );
   }
   const session = await auth.api.getSession({ headers: await headers() });
-  console.log("session", session);
-  //récupérer l'état connexion :
-
+  // console.log("session", session);
+  
+  //récupérer l'état connexion et les rôles:
   let isAdmin;
   let connectedUserId;
   
@@ -54,25 +53,13 @@ export default async function ProjectPage({
       userId:user.id })
       .from(user)
       .where(eq(user.id, session.user.id));
-    console.log("connectedUser", connectedUser);
+    // console.log("connectedUser", connectedUser);
 
     isAdmin = connectedUser[0]?.role;
     connectedUserId = connectedUser[0]?.userId;
   }
-
   return (
     <div className="min-h-screen bg-ada-bg">
-      {/* Header avec logo cliquable */}
-      <header className="bg-white shadow-md">
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <h1 className="text-4xl font-futura">
-            <Link href="/">
-              <span className="text-ada-dark font-bold">ada</span>
-              <span className="text-ada-red font-normal">verse</span>
-            </Link>
-          </h1>
-        </div>
-      </header>
 
       <main className="max-w-5xl mx-auto px-4 py-12 space-y-8">
         {/* Image */}
@@ -160,7 +147,7 @@ export default async function ProjectPage({
 
         {/* ✅ Section Commentaires si utilisateur pas connecté*/}
         {!session && <CommentsList comments={project.comments} />}
-        {isAdmin === false && connectedUserId && <ListConnected comments={project.comments} userId={connectedUserId} />}
+        {isAdmin === false && connectedUserId && <ListConnected comments={project.comments} userId={connectedUserId} projectId={project.id}  />}
         {isAdmin === true && connectedUserId && <ListAdmin comments={project.comments} userId={connectedUserId} />}
 
       </main>
