@@ -64,6 +64,25 @@ export const signin = async (formData: FormData) => {
         redirect("/?form=signin&error=password-missing");
     }
 
+    // ✅ ÉTAPE 1 : Vérifier le ban AVANT la connexion
+    const { db } = await import("../lib/db/drizzle");
+    const { user } = await import("../lib/db/schema");
+    const { eq } = await import("drizzle-orm");
+
+    const userData = await db
+        .select({ 
+            isBanished: user.isBanished,
+        })
+        .from(user)
+        .where(eq(user.email, email))
+        .limit(1);
+
+    // ✅ Si banni, refuser AVANT la connexion
+    if (userData.length > 0 && userData[0].isBanished) {
+        redirect("/?form=signin&error=account-banned");
+    }
+
+    // ✅ ÉTAPE 2 : Connexion normale (vérifie aussi le mot de passe)
     const response = await auth.api.signInEmail({
         body: {
             email,
@@ -74,17 +93,19 @@ export const signin = async (formData: FormData) => {
 
     if (!response.ok) {
         const errorData = await response.json();
-console.log("ERREUR API :", errorData);
-       if (errorData.code === "INVALID_EMAIL_OR_PASSWORD") {
-        redirect("/?form=signin&error=invalid-credentials"); 
-    } 
- else {
+        console.log("ERREUR API :", errorData);
+
+        // ⚠️ IMPORTANT : Ne pas révéler si le compte est banni en cas d'erreur
+        if (errorData.code === "INVALID_EMAIL_OR_PASSWORD") {
+            redirect("/?form=signin&error=invalid-credentials"); 
+        } else {
             console.error("Echec de la connexion:", errorData.message);
             redirect("/?form=signin&error=generic");
         }
     }
 
-    redirect("/"); // on redirige vers la home page une fois connecté
+    // ✅ Connexion réussie
+    redirect("/");
 };
 
 export const signout = async () => {

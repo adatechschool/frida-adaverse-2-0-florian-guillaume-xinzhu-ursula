@@ -9,10 +9,10 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
-  const form = searchParams.get("form")
+  const form = searchParams.get("form");
 
   React.useEffect(() => {
-    if (error&& form==="signin") {
+    if (error && form === "signin") {
       setIsOpen(true);
     }
   }, [error, form]);
@@ -55,17 +55,25 @@ export default function SignIn() {
               ×
             </button>
 
-            <h2 className="text-2xl font-oswald-bold text-ada-red mb-6">Connexion</h2>
+            <h2 className="text-2xl font-oswald-bold text-ada-red mb-6">
+              Connexion
+            </h2>
 
-{error === "invalid-credentials" && (
-  <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
-    Email ou mot de passe incorrect !
-  </div>
-)}
+            {error === "invalid-credentials" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                Email ou mot de passe incorrect !
+              </div>
+            )}
 
             {error === "generic" && (
               <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
                 Une erreur est survenue
+              </div>
+            )}
+
+            {error === "account-banned" && (
+              <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
+                ⛔ Votre compte a été banni. Contactez un administrateur.
               </div>
             )}
 
@@ -77,7 +85,9 @@ export default function SignIn() {
               required
             />
 
-            <label className="block font-oswald-regular mb-2">Mot de passe</label>
+            <label className="block font-oswald-regular mb-2">
+              Mot de passe
+            </label>
             <input
               type="password"
               name="password"
