@@ -10,6 +10,7 @@ export default function SignIn() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
   const form = searchParams.get("form");
+  const userName = searchParams.get("user");
 
   React.useEffect(() => {
     if (error && form === "signin") {
@@ -26,6 +27,14 @@ export default function SignIn() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Fonction pour obtenir le message de ban personnalisé
+  const getBanMessage = () => {
+    if (userName === "Flo") {
+      return "⛔ Ah oui Flo !! T'es foutu !! ";
+    }
+    return "⛔ Votre compte a été banni. Contactez un administrateur.";
   };
 
   return (
@@ -73,7 +82,7 @@ export default function SignIn() {
 
             {error === "account-banned" && (
               <div className="mb-4 p-3 bg-red-100 border-2 border-ada-red text-ada-red rounded-lg text-sm font-bold">
-                ⛔ Votre compte a été banni. Contactez un administrateur.
+                {getBanMessage()}
               </div>
             )}
 

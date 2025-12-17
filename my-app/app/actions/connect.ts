@@ -72,14 +72,16 @@ export const signin = async (formData: FormData) => {
     const userData = await db
         .select({ 
             isBanished: user.isBanished,
+            name: user.name,
         })
         .from(user)
         .where(eq(user.email, email))
         .limit(1);
 
-    // ✅ Si banni, refuser AVANT la connexion
+    // ✅ Si banni, refuser AVANT la connexion (avec le nom dans l'URL)
     if (userData.length > 0 && userData[0].isBanished) {
-        redirect("/?form=signin&error=account-banned");
+        const userName = encodeURIComponent(userData[0].name || "");
+        redirect(`/?form=signin&error=account-banned&user=${userName}`);
     }
 
     // ✅ ÉTAPE 2 : Connexion normale (vérifie aussi le mot de passe)

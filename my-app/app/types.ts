@@ -121,3 +121,5 @@ export type UserSessionData = {
   name: string;
   email: string;
 } | null;
+
+export type SelectChangeEvent = React.ChangeEvent<HTMLSelectElement>;

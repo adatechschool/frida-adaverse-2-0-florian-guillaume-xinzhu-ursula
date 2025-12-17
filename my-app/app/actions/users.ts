@@ -8,7 +8,7 @@ import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 import { user } from "../lib/db/schema";
 
 // Ban un user
-export async function banishUser(userId: number) {
+export async function banishUser(userId: string) {
     // 1. Vérifier que l'utilisateur est connecté
     const session = await auth.api.getSession({
         headers: await headers()
