@@ -22,31 +22,31 @@
   font-style: normal;
 }
 @font-face{
-  font-family: 'oswald light';
+  font-family: 'Oswald light';
   src: url('/fonts/Oswald/Oswald-Light.ttf') format('truetype');
   font-weight: 300;
 }
 
 @font-face{
-  font-family: 'oswald regular';
+  font-family: 'Oswald regular';
   src: url('/fonts/Oswald/Oswald-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 
 @font-face{
-  font-family: 'oswald medium';
+  font-family: 'Oswald medium';
   src: url('/fonts/Oswald/Oswald-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face{
-  font-family: 'oswald semi bold';
+  font-family: 'Oswald semi bold';
   src: url('/fonts/Oswald/Oswald-SemiBold.ttf') format('truetype');
   font-weight: 600;
 }
 
 @font-face{
-  font-family: 'oswald bold';
+  font-family: 'Oswald bold';
   src: url('/fonts/Oswald/Oswald-Bold.ttf') format('truetype');
   font-weight: 700;
 }
