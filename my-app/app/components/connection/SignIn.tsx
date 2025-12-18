@@ -3,11 +3,13 @@ import { signin } from "@/app/actions/connect";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const error = searchParams.get("error");
   const form = searchParams.get("form");
   const userName = searchParams.get("user");
@@ -17,6 +19,14 @@ export default function SignIn() {
       setIsOpen(true);
     }
   }, [error, form]);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    // Nettoyer l'URL si c'était une erreur de ban
+    if (error === "account-banned") {
+      router.push("/");
+    }
+  };
 
   const handleSubmit = async (formData: FormData) => {
     setLoading(true);
@@ -59,7 +69,7 @@ export default function SignIn() {
             <button
               type="button"
               className="absolute top-4 right-4 w-10 h-10 bg-ada-red hover:bg-ada-coral text-white font-black rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all font-oswald-bold text-xl"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose} // ← Utiliser handleClose au lieu de () => setIsOpen(false)
             >
               ×
             </button>
