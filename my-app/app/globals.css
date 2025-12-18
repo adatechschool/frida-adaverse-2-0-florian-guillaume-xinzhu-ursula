@@ -64,12 +64,11 @@
   --color-ada-bg: #1a1a1a;
 
   --font-futura: 'Futura', sans-serif;
-  --font-oswald-light: 'oswald light', sans-serif;
-  --font-oswald-regular: 'oswald regular', sans-serif;
-  --font-oswald-medium: 'oswald medium', sans-serif;
-  --font-oswald-semibold: 'oswald semi bold', sans-serif;
-  --font-oswald-bold: 'oswald bold', sans-serif;
-
+  --font-oswald-light: 'Oswald light', sans-serif;
+  --font-oswald-regular: 'Oswald regular', sans-serif;
+  --font-oswald-medium: 'Oswald medium', sans-serif;
+  --font-oswald-semibold: 'Oswald semi bold', sans-serif;
+  --font-oswald-bold: 'Oswald bold', sans-serif;
   /* Définir vos couleurs personnalisées */
   --color-ada-red: #FF5757;
   --color-ada-coral: #FF6B6B;
