@@ -100,7 +100,7 @@ export default function ListAdmin({ comments, userId }: Props) {
             </p>
             <div className="ml-auto flex gap-4">
               <button 
-              onClick={() => banishUser(comment.user.id)}
+              onClick={() => comment.user && banishUser(comment.user.id)}
               disabled={comment.user?.isBanished}
               className="w-[140px] h-[50px] font-oswald-semibold flex-1 bg-ada-dark hover:bg-gray-800 text-white text-sm py-2 rounded-lg transition-all disabled:opacity-50 cursor-pointer">
               {comment.user?.isBanished ? "🚫 Est banni" : "🤬 Bannir"}

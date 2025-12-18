@@ -29,7 +29,7 @@ export default function SignIn() {
     }
   };
 
-  // Fonction pour obtenir le message de ban personnalisé
+  // Fonction pour obtenir le message de ban
   const getBanMessage = () => {
     if (userName === "Flo") {
       return "⛔ Ah oui Flo !! T'es foutu !! ";
