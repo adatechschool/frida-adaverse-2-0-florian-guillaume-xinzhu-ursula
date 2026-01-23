@@ -75,7 +75,7 @@ export const signin = async (formData: FormData) => {
     const errorData = await response.json();
     console.log("ERREUR API :", errorData);
 
-    // ⚠️ IMPORTANT : Ne pas révéler si le compte est banni en cas d'erreur
+    // IMPORTANT : Ne pas révéler si le compte est banni en cas d'erreur
     if (errorData.code === "INVALID_EMAIL_OR_PASSWORD") {
       redirect("/?form=signin&error=invalid-credentials");
     } else {
@@ -84,7 +84,7 @@ export const signin = async (formData: FormData) => {
     }
   }
 
-  // 2️⃣ Récupérer l'utilisateur AVANT que la session soit créée
+  // Récupérer l'utilisateur AVANT que la session soit créée
   const fullUser = await db.query.user.findFirst({
     where: eq(user.email, email),
   });
@@ -97,7 +97,7 @@ export const signin = async (formData: FormData) => {
   const isAdmin = fullUser.isAdmin;
   console.log("isAdmin =", isAdmin);
 
-  // 3️⃣ Redirection immédiate (la session sera active sur la page suivante)
+  // Redirection immédiate (la session sera active sur la page suivante)
   if (isAdmin) {
     redirect("/admin");
   }
